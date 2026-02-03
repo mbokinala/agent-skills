@@ -20,7 +20,18 @@ List commits on the branch with `git log --oneline --decorate <parent>..HEAD`. I
 Identify likely WIP commits, such as messages containing `wip`, `tmp`, `debug`, `fix`, `lint`, `format`, `typo`, `oops`, `cleanup`, `chore`, or `test`. Suggest squashing consecutive commits that touch the same feature or files and represent incremental progress. Avoid squashing unrelated features or semantic boundaries (for example refactors vs behavior changes). Prefer `fixup` for tiny follow-ups and `squash` when the message should be combined or edited. Propose concise, descriptive commit messages in imperative mood.
 
 4. Execute the rebase only after explicit confirmation.
-If fixup commits exist, prefer `git rebase -i --autosquash <parent>`. Otherwise use `git rebase -i <parent>`. If the branch contains merge commits and the user wants to preserve them, use `git rebase -i --rebase-merges <parent>`. In the editor, change `pick` to `reword`, `squash`, or `fixup` per the plan and rewrite messages as needed. If conflicts occur, resolve them, then run `git add -A` and `git rebase --continue`. If the rebase should be abandoned, run `git rebase --abort`.
+If fixup commits exist, prefer `git rebase -i --autosquash <parent>`. Otherwise use `git rebase -i <parent>`. If the branch contains merge commits and the user wants to preserve them, use `git rebase -i --rebase-merges <parent>`.
+
+Because interactive editors can hang or fail in this environment, prefer non-interactive editors:
+- Create a `GIT_SEQUENCE_EDITOR` script that writes the todo list.
+- Create a `GIT_EDITOR` script that writes the commit message for `reword`/`squash`.
+- Run `GIT_SEQUENCE_EDITOR=... GIT_EDITOR=... git rebase -i <parent>`.
+
+In the todo list, change `pick` to `reword`, `squash`, or `fixup` per the plan and rewrite messages as needed.
+
+If a commit becomes empty during rebase, run `git rebase --skip` (after confirming this is expected).
+If conflicts occur, resolve them, then run `git add -A` and `git rebase --continue`.
+If the rebase should be abandoned, run `git rebase --abort`.
 
 5. Validate and finalize.
 Verify the new history with `git log --oneline --decorate <parent>..HEAD`. Ensure content is unchanged with `git diff <parent>...HEAD`. If the branch was previously pushed, remind the user to use `git push --force-with-lease`.
