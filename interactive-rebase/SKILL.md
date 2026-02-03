@@ -7,6 +7,9 @@ description: Guided interactive git rebase to clean up a branch's commit history
 
 ## Workflow
 
+0. Plan for permission escalation.
+Most commands in this workflow will require permission escalation. Ask for approval before running Git commands that modify history or the working tree. Use the escalation flow for any command that is blocked by sandboxing.
+
 1. Gather context and confirm safety.
 Use `git rev-parse --abbrev-ref HEAD` to confirm the current branch. Ask for the parent branch to rebase onto (for example `main`, `master`, `staging`, `develop`). Ask whether the branch has been pushed or shared and warn that history will change. Ensure the working tree is clean with `git status -sb`; if dirty, ask the user to stash or commit before proceeding.
 
