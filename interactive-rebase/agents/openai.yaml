@@ -1,0 +1,4 @@
+interface:
+  display_name: "Interactive Rebase"
+  short_description: "Clean up branch history with rebase"
+  default_prompt: "Use -rebase to clean up this branch's commit history."
