@@ -1,0 +1,4 @@
+interface:
+  display_name: "Fix Merge Conflicts"
+  short_description: "Resolve git merge conflicts safely and interactively"
+  default_prompt: "Resolve merge conflicts in the repo, asking for guidance when intent is unclear."
